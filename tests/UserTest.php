@@ -16,12 +16,12 @@ class UserTest extends TestCase
         $password = Hash::make("password");
         $this->json('POST', '/api/v1/auth/register', [
             'name' => "John Doe",
-            'email' => "john@example.com",
+            'email' => "john@example.com".rand(),
             'password' => $password,
             'password_confirmation' => $password
         ])->seeJson([
                 'success' => true,
-             ]);
+             ])->assertResponseOk();
     }
 
     /**
@@ -41,19 +41,4 @@ class UserTest extends TestCase
         $this->assertEquals(400, $response->status());
     }
 
-    /**
-     * Test that a user can login
-     *
-     * @return void
-     */
-    // public function testThatAUserWithCorrectCredentialsCanLogin()
-    // {
-    //     $password = Hash::make("password");        
-    //     $this->json('POST', '/api/v1/auth/login', [           
-    //         'email' => "john@example.com",
-    //         'password' => $password,
-    //     ])->seeJson([
-    //             'success' => true,
-    //          ]);
-    // }
 }
